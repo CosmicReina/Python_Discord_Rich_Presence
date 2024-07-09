@@ -1,7 +1,15 @@
-import pystray
-import sys
 import os
+import sys
+
+import pystray
 from PIL import Image
+
+
+class TelevisionMenu(pystray.Menu):
+    item_exit = pystray.MenuItem("Exit", action_exit)
+
+    def __init__(self):
+        super().__init__(self.item_exit)
 
 
 def resource_path(relative_path: str):
@@ -15,13 +23,6 @@ def resource_path(relative_path: str):
 
 def action_exit(icon: pystray.Icon, _):
     icon.stop()
-
-
-class TelevisionMenu(pystray.Menu):
-    item_exit = pystray.MenuItem("Exit", action_exit)
-
-    def __init__(self):
-        super().__init__(self.item_exit)
 
 
 image_path = resource_path("television.ico")
