@@ -1,7 +1,20 @@
 import pystray
+import sys
+import os
 from PIL import Image
 
-image = Image.open("television.ico")
+
+def resource_path(relative_path: str):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
+image_path = resource_path("television.ico")
+image = Image.open(image_path)
 
 
 def action_exit(icon: pystray.Icon, _):
