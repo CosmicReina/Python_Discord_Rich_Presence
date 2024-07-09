@@ -55,10 +55,10 @@ def run_rpc():
     try:
         while not TRAY_CLOSED:
             RPC.update(
-                details="Watching Television",
-                state="Switching Channels",
+                details="Watching television",
+                state="Switching channels",
                 large_image="television",
-                large_text="Watching Television",
+                large_text="Watching television",
                 start=int(START),
             )
             time.sleep(1)
