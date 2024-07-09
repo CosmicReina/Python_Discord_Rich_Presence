@@ -5,7 +5,7 @@ a = Analysis(
     ['Television_Tray.py'],
     pathex=[],
     binaries=[],
-    datas=[('television.ico', '.')],
+    datas=[('D:\\08_Project\\PyCharm\\Discord_Rich_Presence\\src/television.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['television.ico'],
+    icon=['D:\\08_Project\\PyCharm\\Discord_Rich_Presence\\src\\television.ico'],
 )

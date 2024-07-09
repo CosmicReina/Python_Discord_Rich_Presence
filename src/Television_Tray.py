@@ -13,10 +13,6 @@ def resource_path(relative_path: str):
     return os.path.join(base_path, relative_path)
 
 
-image_path = resource_path("television.ico")
-image = Image.open(image_path)
-
-
 def action_exit(icon: pystray.Icon, _):
     icon.stop()
 
@@ -28,5 +24,7 @@ class TelevisionMenu(pystray.Menu):
         super().__init__(self.item_exit)
 
 
+image_path = resource_path("television.ico")
+image = Image.open(image_path)
 icon = pystray.Icon(name="Television", icon=image, title="Television", menu=TelevisionMenu())
 icon.run()
