@@ -1,10 +1,10 @@
 import pystray
 from PIL import Image
 
-image = Image.open("television.png")
+image = Image.open("television.ico")
 
 
-def action_exit(icon, _):
+def action_exit(icon: pystray.Icon, _):
     icon.stop()
 
 
