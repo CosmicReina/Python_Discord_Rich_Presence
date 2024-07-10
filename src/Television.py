@@ -35,7 +35,7 @@ class TelevisionMenu(pystray.Menu):
         super().__init__(self.item_exit)
 
 
-IMAGE_PATH = resource_path("television.ico")
+IMAGE_PATH = resource_path("resources/television.ico")
 IMAGE = Image.open(IMAGE_PATH)
 ICON = pystray.Icon(name="Television", icon=IMAGE, title="Television", menu=TelevisionMenu())
 
