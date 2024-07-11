@@ -2,12 +2,14 @@ import os
 import sys
 import threading
 import time
-from typing import IO
+from typing import IO, Optional
 
 import pystray
 from PIL import Image
 from PIL.Image import StrOrBytesPath
 from pypresence import Presence
+
+import Channel
 
 
 def resource_path(relative_path: StrOrBytesPath | IO[bytes]):
@@ -39,20 +41,32 @@ ICON = pystray.Icon(name="Television", icon=IMAGE, title="Television", menu=Tele
 
 # PyPresence
 TRAY_CLOSED = False
-START = time.time()
 RPC = Presence("1260226649870565537")
 
 
 def run_rpc():
     RPC.connect()
 
+    start = time.time()
     while not TRAY_CLOSED:
+
+        window: Optional[str] = Channel.get_current_window()
+        if window is not None:
+            split = window.split(" - ")
+            application = split[-1]
+            if application == "Discord":
+                state = split[0]
+            else:
+                state = "Switching channels"
+        else:
+            state = "Switching channels"
+
         RPC.update(
             details="Watching television",
-            state="Switching channels",
+            state=state,
             large_image="television",
             large_text="Watching television",
-            start=int(START),
+            start=int(start),
         )
         time.sleep(1)
 

@@ -1,9 +1,10 @@
-import pygetwindow
 import time
 from typing import Optional
 
+import pygetwindow
 
-def get_current_window():
+
+def get_current_window() -> Optional[str]:
     window = pygetwindow.getActiveWindow()
     if window is None:
         return None
@@ -20,6 +21,4 @@ if __name__ == "__main__":
         try:
             time.sleep(1)
         except KeyboardInterrupt:
-            print("Exiting...")
             break
-
