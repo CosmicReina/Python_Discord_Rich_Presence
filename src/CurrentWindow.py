@@ -1,26 +1,23 @@
 import pygetwindow
 import time
-from pywinauto import Desktop
-
-current = None
+from typing import Optional
 
 
 def get_current_window():
-    global current
-    try:
-        window = pygetwindow.getActiveWindow()
-        if window is None:
-            return "No active window"
-        if window.title != current:
-            current = window.title
-            return current
-    except Exception as e:
-        return f"An error occurred: {e}"
+    window = pygetwindow.getActiveWindow()
+    return window.title
 
 
 if __name__ == "__main__":
+    current: Optional[str] = None
     while True:
         title = get_current_window()
-        if title is not None:
+        if title != current:
             print(title)
-        time.sleep(1)
+            current = title
+        try:
+            time.sleep(1)
+        except KeyboardInterrupt:
+            print("Exiting...")
+            break
+
