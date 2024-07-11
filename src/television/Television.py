@@ -9,7 +9,7 @@ from PIL import Image
 from PIL.Image import StrOrBytesPath
 from pypresence import Presence
 
-import Channel
+from television.modules import Channel
 
 
 def resource_path(relative_path: StrOrBytesPath | IO[bytes]):
