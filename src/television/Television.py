@@ -2,17 +2,15 @@ import os
 import sys
 import threading
 import time
-
-from pypresence import Presence
+from typing import IO
 
 import pystray
 from PIL import Image
+from PIL.Image import StrOrBytesPath
+from pypresence import Presence
 
 
-TRAY_CLOSED = False
-
-
-def resource_path(relative_path: str):
+def resource_path(relative_path: StrOrBytesPath | IO[bytes]):
     try:
         base_path = sys._MEIPASS
     except AttributeError:
@@ -39,47 +37,38 @@ IMAGE_PATH = resource_path("resources/television.ico")
 IMAGE = Image.open(IMAGE_PATH)
 ICON = pystray.Icon(name="Television", icon=IMAGE, title="Television", menu=TelevisionMenu())
 
-
 # PyPresence
+TRAY_CLOSED = False
 START = time.time()
-
-APPLICATION_ID = "1260226649870565537"
-RPC = Presence(APPLICATION_ID)
-NAME = os.path.basename(__file__).split(".")[0]
+RPC = Presence("1260226649870565537")
 
 
 def run_rpc():
     RPC.connect()
-    print(f"Presence {NAME} has started.")
 
-    try:
-        while not TRAY_CLOSED:
-            RPC.update(
-                details="Watching television",
-                state="Switching channels",
-                large_image="television",
-                large_text="Watching television",
-                start=int(START),
-            )
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print(f"Presence {NAME} has stopped due to a keyboard interrupt.")
-    except Exception as e:
-        print(f"Presence {NAME} has stopped due to an error: {e}")
+    while not TRAY_CLOSED:
+        RPC.update(
+            details="Watching television",
+            state="Switching channels",
+            large_image="television",
+            large_text="Watching television",
+            start=int(START),
+        )
+        time.sleep(1)
 
     RPC.close()
-    print(f"Presence {NAME} has stopped.")
 
 
 def run_icon():
     ICON.run()
 
 
-thread_icon = threading.Thread(target=run_icon, daemon=True)
-thread_rpc = threading.Thread(target=run_rpc, daemon=True)
+if __name__ == "__main__":
+    thread_icon = threading.Thread(target=run_icon, daemon=True)
+    thread_rpc = threading.Thread(target=run_rpc, daemon=True)
 
-thread_icon.start()
-thread_rpc.start()
+    thread_icon.start()
+    thread_rpc.start()
 
-thread_icon.join()
-thread_rpc.join()
+    thread_icon.join()
+    thread_rpc.join()
