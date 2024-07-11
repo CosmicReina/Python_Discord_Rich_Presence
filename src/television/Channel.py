@@ -5,6 +5,8 @@ from typing import Optional
 
 def get_current_window():
     window = pygetwindow.getActiveWindow()
+    if window is None:
+        return None
     return window.title
 
 
