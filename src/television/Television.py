@@ -27,12 +27,24 @@ def action_exit(icon: pystray.Icon, _):
     icon.stop()
 
 
+TOGGLE = True
+
+
+def action_toggle(_, __):
+    global TOGGLE
+    TOGGLE = not TOGGLE
+
+
 # Pystray
 class TelevisionMenu(pystray.Menu):
+    item_toggle = pystray.MenuItem("Toggle", action_toggle, checked=lambda item: TOGGLE)
     item_exit = pystray.MenuItem("Exit", action_exit)
 
     def __init__(self):
-        super().__init__(self.item_exit)
+        super().__init__(
+            self.item_toggle,
+            self.item_exit
+        )
 
 
 IMAGE_PATH = resource_path("resources/television.ico")
@@ -51,15 +63,18 @@ def run_rpc():
     while not TRAY_CLOSED:
 
         window: Optional[str] = Channel.get_current_window()
-        if window is not None:
-            split = window.split(" - ")
-            application = split[-1]
-            if application == "Discord":
-                state = split[0]
+        if not TOGGLE:
+            state = "Watching advertisements"
+        else:
+            if window is not None:
+                split = window.split(" - ")
+                application = split[-1]
+                if application == "Discord":
+                    state = f"Watching {split[0]}"
+                else:
+                    state = "Switching channels"
             else:
                 state = "Switching channels"
-        else:
-            state = "Switching channels"
 
         RPC.update(
             details="Watching television",
