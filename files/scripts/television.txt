@@ -1,1 +1,1 @@
-pyinstaller --onefile --noconsole --icon=resources/television.ico --add-data="resources/television.ico;." Television.py
+pyinstaller --onefile --noconsole --icon=resources/television.ico --add-data="resources/television.ico;resources" Television.py
