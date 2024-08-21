@@ -53,7 +53,8 @@ ICON = pystray.Icon(name="Television", icon=IMAGE, title="Television", menu=Tele
 
 # PyPresence
 TRAY_CLOSED = False
-RPC = Presence("1260226649870565537")
+CLIENT_ID = "1260226649870565537" # Your Discord application ID
+RPC = Presence(CLIENT_ID)
 
 
 def run_rpc():
